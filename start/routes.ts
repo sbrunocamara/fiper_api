@@ -20,6 +20,69 @@
 
 import Route from '@ioc:Adonis/Core/Route'
 
+Route.post('login', async ({ auth, request, response }) => {
+  const user = request.input('email')
+  const password = request.input('password')
+
+  try {
+    const token = await auth.use('api').attempt(user,password, {
+      expiresIn: '3 days'
+      
+    })
+
+    const userData = auth.use('api').user?.toJSON()
+
+    let data = [
+      token,
+      userData
+    ]
+
+    return data
+
+  } catch(_error) {
+    return response.unauthorized('Invalid credentials')
+  }
+}).prefix('/api')
+
+Route.post('checkLogin', async ({ auth, request, response }) => {
+
+  const token = request.input('token')
+
+  try {
+    const login = await auth.use('api').authenticate()
+
+    console.log(login)
+
+    if(login){
+      return response.ok('Valid token')
+    }
+
+  } catch(_error) {
+    return response.unauthorized('Invalid credentials')
+  }
+}).prefix('/api')
+
+
+Route.post('logout', async ({ auth, request, response }) => {
+
+
+  try {
+
+    const logout = await auth.use('api').logout()
+
+    return await auth.use('api').check()
+
+ 
+
+  } catch(_error) {
+    return response.unauthorized('Invalid credentials')
+  }
+}).prefix('/api')
+
+
+
+
+
 Route.group(() => {
 
   //Marcas routes
