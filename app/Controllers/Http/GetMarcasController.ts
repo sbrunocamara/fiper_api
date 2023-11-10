@@ -4,10 +4,11 @@ import Env from '@ioc:Adonis/Core/Env'
 
 export default class GetMarcasController {
 
-    async getMarcasCarros({ response,request }: HttpContextContract) {
+
+   async getMarcas({ response,request }: HttpContextContract) {
 
       try{
-        const data = await axios.get(Env.get('URL_API_FIPE')+'/cars/brands');
+        const data = await axios.get(Env.get('URL_API_FIPE')+'/'+request.param('vehicleType')+'/brands');
 
        return response.json(data.data);
 
@@ -16,36 +17,43 @@ export default class GetMarcasController {
       }
     }
 
-    async getMarcasMotos({ response,request }: HttpContextContract) {
+    // async getMarcasCarros({ response,request }: HttpContextContract) {
 
-      try{
-        const data = await axios.get(Env.get('URL_API_FIPE')+'/motorcycles/brands');
-        return response.json(data.data);
-      }catch(error){
-        return response.json(error);
-      }
-    }
+    //   try{
+    //     const data = await axios.get(Env.get('URL_API_FIPE')+'/cars/brands');
 
-    async getMarcasCaminhoes({ response,request }: HttpContextContract) {
+    //    return response.json(data.data);
 
-      try{
-        const data = await axios.get(Env.get('URL_API_FIPE')+'/trucks/brands');
-        return response.json(data.data);
-      }catch(error){
-        return response.json(error);
-      }
-    }
+    //   }catch(error){
+    //     return response.json(error);
+    //   }
+    // }
+
+    // async getMarcasMotos({ response,request }: HttpContextContract) {
+
+    //   console.log(request.qs())
+
+    //   try{
+    //     const data = await axios.get(Env.get('URL_API_FIPE')+'/motorcycles/brands');
+    //     return response.json(data.data);
+    //   }catch(error){
+    //     return response.json(error);
+    //   }
+    // }
+
+    // async getMarcasCaminhoes({ response,request }: HttpContextContract) {
+
+    //   try{
+    //     const data = await axios.get(Env.get('URL_API_FIPE')+'/trucks/brands');
+    //     return response.json(data.data);
+    //   }catch(error){
+    //     return response.json(error);
+    //   }
+    // }
 
 
 
-
-
-
-
-
-
-
-
+  
 
 
 

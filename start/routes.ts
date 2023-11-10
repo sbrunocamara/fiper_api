@@ -86,29 +86,45 @@ Route.post('logout', async ({ auth, request, response }) => {
 Route.group(() => {
 
   //Marcas routes
-  Route.get('/marcas/carros', 'GetMarcasController.getMarcasCarros')
-  Route.get('/marcas/motos', 'GetMarcasController.getMarcasMotos')
-  Route.get('/marcas/caminhoes', 'GetMarcasController.getMarcasCaminhoes')
+  Route.get('/brands/:vehicleType', 'GetMarcasController.getMarcas')
+
+  // Route.get('/marcas/carros', 'GetMarcasController.getMarcasCarros')
+  // Route.get('/marcas/motos', 'GetMarcasController.getMarcasMotos')
+  // Route.get('/marcas/caminhoes', 'GetMarcasController.getMarcasCaminhoes')
+
+
 
   //Modelos routes
-  Route.get('/modelos/carros/:id', 'GetModelosController.getModelosCarros')
-  Route.get('/modelos/motos/:id', 'GetModelosController.getModelosMotos')
-  Route.get('/modelos/caminhoes/:id', 'GetModelosController.getModelosCaminhoes')
+  Route.get('/models/:vehicleType/:brandId', 'GetModelosController.getModelos')
+
+  // Route.get('/models/carros/:id', 'GetModelosController.getModelosCarros')
+  // Route.get('/modelos/motos/:id', 'GetModelosController.getModelosMotos')
+  // Route.get('/modelos/caminhoes/:id', 'GetModelosController.getModelosCaminhoes')
 
   //Anos routes
-  Route.get('/anos/carros/:id/:idModelo', 'GetAnosController.getAnosCarros')
-  Route.get('/anos/motos/:id/:idModelo', 'GetAnosController.getAnosMotos')
-  Route.get('/anos/caminhoes/:id/:idModelo', 'GetAnosController.getAnosCaminhoes')
+  Route.get('/years/:vehicleType/:brandId/:modelId', 'GetAnosController.getAnos')
+
+  // Route.get('/anos/carros/:id/:idModelo', 'GetAnosController.getAnosCarros')
+  // Route.get('/anos/motos/:id/:idModelo', 'GetAnosController.getAnosMotos')
+  // Route.get('/anos/caminhoes/:id/:idModelo', 'GetAnosController.getAnosCaminhoes')
 
   //Valor routes
-  Route.get('/valor/carros/:id/:idModelo/:idAno', 'GetValoresController.getValorCarros')
-  Route.get('/valor/motos/:id/:idModelo/:idAno', 'GetValoresController.getValorMotos')
-  Route.get('/valor/caminhoes/:id/:idModelo/:idAno', 'GetValoresController.getValorCaminhoes')
+  Route.get('/value/:vehicleType/:brandId/:modelId/:yearId', 'GetValoresController.getValor')
+
+  // Route.get('/valor/carros/:id/:idModelo/:idAno', 'GetValoresController.getValorCarros')
+  // Route.get('/valor/motos/:id/:idModelo/:idAno', 'GetValoresController.getValorMotos')
+  // Route.get('/valor/caminhoes/:id/:idModelo/:idAno', 'GetValoresController.getValorCaminhoes')
 
   //Historico routes
-  Route.get('/valor/historico/motos/:fipeCode/:idAno', 'GetValoresController.getMotosHistory')
-  Route.get('/valor/historico/carros/:fipeCode/:idAno', 'GetValoresController.getCarrosHistory')
-  Route.get('/valor/historico/caminhoes/:fipeCode/:idAno', 'GetValoresController.getCaminhoesHistory')
+  Route.get('/values/history/:vehicleType/:codeFipe/:yearId', 'GetValoresController.getHistory')
+
+  // Route.get('/valor/historico/motos/:fipeCode/:idAno', 'GetValoresController.getMotosHistory')
+  // Route.get('/valor/historico/carros/:fipeCode/:idAno', 'GetValoresController.getCarrosHistory')
+  // Route.get('/valor/historico/caminhoes/:fipeCode/:idAno', 'GetValoresController.getCaminhoesHistory')
+
+  //Export routes
+  Route.get('/values/history/:vehicleType/:codeFipe/:yearId/export/pdf', 'PdfMakersController.generate')
+
 
   }).prefix('/api')
   
