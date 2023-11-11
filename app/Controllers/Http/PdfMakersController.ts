@@ -29,26 +29,15 @@ export default class PdfMakersController {
 
     console.log();
 
-    // let filename = historyData.model.replaceAll(' ', "_").replace('/','')+'-'+moment().format("DD-MM-YY") + ".pdf";
-    let filename ='teste'+ ".pdf";
+    let filename = historyData.model.replaceAll(' ', "_").replace('/','')+'-'+moment().format("DD-MM-YY") + ".pdf";
     let pdf = await this.pdfWriter(filename, historyData);
    
-    // response.status(200).send({
-    //   historyData: values
-   
-    //  });
 
-
- 
-
-
-    // let pdf = this.pdfWriter(filename, content);
-
-    // response.status(200).send({
-    //   base64: await pdf,
-    //   URL: Env.get("URL_FILES") + filename,
-    //   filename: filename,
-    // });
+    response.status(200).send({
+      base64: await pdf,
+      URL: Env.get("URL_FILES") + filename,
+      filename: filename,
+    });
 
 
   }
@@ -59,25 +48,55 @@ export default class PdfMakersController {
     const pdfBuffer = await new Promise((resolve) => {
       const doc = new PDFDocument();
 
-      doc.fontSize(18);
-      doc.text("Dados do veículo",260, 30,"center");
+      doc.image('files/pdfModel.jpg', -3, 15, {align: 'center',width: 630})
+ 
       doc.fontSize(12);
-      doc.text("Marca:  " + content.brand, 100, 68);
-      doc.text("Modelo:  " + content.model, 100, 86);
-      doc.text("Ano:  " + content.year, 100, 104);
-      doc.text("Combustível:  " + content.fuel, 100, 122);
-      doc.text("Código FIPE:  " + content.codeFipe, 100, 140);
+      doc.fillColor('white')
 
-      doc.image('C:/Users/bsbru/Downloads/pdfteste.jpg', 0, 15, {align: 'center',width: 630})
-      // doc.text("Descricão:  " + content.projeto.descricao, 100, 104);
+      doc.text(content.brand+' '+content.model, 75, 110);
 
-      let line = 144;
-      doc.fontSize(18);
-      doc.text("Histórico de valores", 250, 190);
-      line = line + 18;
-      doc.fontSize(12);
-   
+      doc.text(content.brand, null, 175, 
+        {
+        align: 'left',
+      }
+      );
+
+
+      doc.text(content.model,null, 227, 
+        {
+        align: 'left'
+      }
+      );
+
+      doc.text(content.modelYear, null, 279, 
+        {
+        align: 'left'
+        
+      }
+      );
+
+      doc.text(content.fuel, null, 331, 
+        {
+        align: 'left'
+      }
+      );
+
+      doc.fillColor('black')
+      let lineValue = 415 //includes 73
+      let lineMonth = 389 //includes 73
+
+      content.priceHistory.forEach(element => {
+
+        lineMonth = lineMonth + 73
+        lineValue = lineValue + 73
+
+        doc.text(element.month, 250, lineMonth)
+        doc.text(element.price, 255, lineValue)
+      
+      }); 
+
       doc.end();
+
 
       //Finalize document and convert to buffer array
       let buffers = [];
@@ -121,5 +140,7 @@ export default class PdfMakersController {
 
   async htmlPdf(){
 
+
+}
 
 }
