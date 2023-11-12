@@ -27,8 +27,6 @@ export default class PdfMakersController {
     });
 
 
-    console.log();
-
     let filename = historyData.model.replaceAll(' ', "_").replace('/','')+'-'+moment().format("DD-MM-YY") + ".pdf";
     let pdf = await this.pdfWriter(filename, historyData);
    
@@ -81,7 +79,7 @@ export default class PdfMakersController {
       }
       );
 
-      doc.fillColor('black')
+      doc.fillColor('white')
       let lineValue = 415 //includes 73
       let lineMonth = 389 //includes 73
 

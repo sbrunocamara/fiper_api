@@ -124,6 +124,8 @@ Route.group(() => {
 
   //Export routes
   Route.get('/values/history/:vehicleType/:codeFipe/:yearId/export/pdf', 'PdfMakersController.generate')
+  Route.post('/values/history/:vehicleType/:codeFipe/:yearId/export/mail', 'MailController.exportMail')
+  
 
 
   }).prefix('/api')
